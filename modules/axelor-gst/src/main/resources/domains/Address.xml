@@ -8,7 +8,7 @@
 
   <entity name="Address">
     <string name="type" title="Type" selection="gst.address.type.select" required="true" />
-    <string name="line1" title="Line 1" required="true"/>
+    <string name="line1" title="Line 1" required="true" namecolumn="true"/>
     <string name="line2" title="Line 2" />
     <many-to-one name="city" ref="com.axelor.apps.gst.db.City" required="true" title="City"/>
     <many-to-one name="state" ref="com.axelor.apps.gst.db.State" title="State"/>

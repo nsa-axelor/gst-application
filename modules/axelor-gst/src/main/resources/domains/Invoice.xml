@@ -12,13 +12,13 @@
     <string name="statusSelect" title="Status" readonly="true" selection="gst.invoice.status.select" />
     <many-to-one name="company" ref="com.axelor.apps.gst.db.Company" required="true" title="Company" default="defaultC"/>
     <string name="reference" title="Reference" readonly="true" sequence=""/>
-    <datetime name="invoiceDateT" title="Date" />
+    <datetime name="invoiceDateT" title="Date"/>
     <integer name="priority" title="Priority"/>
     <many-to-one name="party" ref="com.axelor.apps.gst.db.Party" required="true" title="Party"/>
     <many-to-one name="partyContact" ref="com.axelor.apps.gst.db.Contact" title="Party Contact" />
     <many-to-one name="invoiceAddress" ref="com.axelor.apps.gst.db.Address" title="Invoice Address" required="true"/>
     <many-to-one name="shippingAddress" ref="com.axelor.apps.gst.db.Address" title="Shipping Address" />
-    <boolean name="isUseInvoiceAddressAsShipping" default="true"/>
+    <boolean name="isUseInvoiceAddressAsShipping" default="true" title="Use Invoice Address As Shipping"/>
     <decimal name="netAmount" readonly="true" title="Net Amount"/>
     <decimal name="netIgst" readonly="true" title="Net IGST"/>
     <decimal name="netCsgt" readonly="true" title="Net CSGT"/>
