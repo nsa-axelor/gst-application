@@ -2,6 +2,7 @@ package com.axelor.apps.gst.service;
 
 import com.axelor.apps.gst.db.Sequence;
 import com.axelor.apps.gst.db.repo.SequenceRepository;
+import com.axelor.inject.Beans;
 import com.axelor.meta.db.MetaModel;
 import com.google.inject.persist.Transactional;
 
@@ -30,14 +31,17 @@ public class SequenceServiceImpl implements SequenceService {
   }
 
   @Transactional
-  private static void changeToNextNumber(Sequence sequence) {
+  public static void changeToNextNumber(Sequence sequence) {
     int nextNumer = Integer.parseInt(sequence.getNextNumber()) + 1;
-    sequence.setNextNumber(String.valueOf(nextNumer));
+    SequenceRepository repository = Beans.get(SequenceRepository.class);
+    Sequence s = repository.find(sequence.getId());
+    s.setNextNumber(String.valueOf(nextNumer));
+    Beans.get(SequenceRepository.class).save(s);
   }
 
   @Override
   public Sequence findSequenceByModel(MetaModel model) {
-    SequenceRepository repository = new SequenceRepository();
+    SequenceRepository repository = Beans.get(SequenceRepository.class);
     Sequence sequence = repository.findByModel(model);
     return sequence;
   }

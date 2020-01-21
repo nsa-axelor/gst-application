@@ -28,9 +28,32 @@
       <field name="isCustomer" />
       <field name="isSupplier" />
     </panel>
-    <panel>
-      <field name="contactList" colSpan="12" />
-      <field name="addressList" colSpan="12" />
+    <panel colSpan="12">
+      <field name="contactList" widget="editor" title="Contacts"
+        colSpan="12">
+        <editor x-viewer="true">
+          <field name="name" />
+          <field name="type" />
+          <field name="primaryEmail" />
+          <field name="secondaryEmail" />
+          <field name="primaryPhone" />
+          <field name="secondaryPhone" />
+        </editor>
+      </field>
+    </panel>
+    <panel colSpan="12">
+      <field name="addressList" widget="editor" title="Address"
+        colSpan="12">
+        <editor x-viewer="true">
+          <field name="type" />
+          <field name="line1" />
+          <field name="line2" />
+          <field name="city" />
+          <field name="state" />
+          <field name="country" />
+          <field name="pincode" />
+        </editor>
+      </field>
     </panel>
   </form>
 

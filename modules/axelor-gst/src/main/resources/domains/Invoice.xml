@@ -7,7 +7,7 @@
   <module package="com.axelor.apps.gst.db" name="gst" />
 
   <entity name="Invoice">
-    <string name="statusSelect" title="Status" readonly="true" selection="gst.invoice.status.select" />
+    <string name="statusSelect" title="Status" readonly="true" selection="gst.invoice.status.select" default="draft" />
     <many-to-one name="company" ref="com.axelor.apps.gst.db.Company" required="true" title="Company" default="defaultC"/>
     <string name="reference" title="Reference" readonly="true"/>
     <datetime name="invoiceDateT" title="Date"/>
