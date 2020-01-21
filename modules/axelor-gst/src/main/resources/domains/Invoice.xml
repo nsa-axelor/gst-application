@@ -6,12 +6,10 @@
 
   <module package="com.axelor.apps.gst.db" name="gst" />
 
-  <sequence name="gst.invoice.reference.sequence" increment="1" initial="1" padding="3" prefix="R"/>
-
   <entity name="Invoice">
     <string name="statusSelect" title="Status" readonly="true" selection="gst.invoice.status.select" />
     <many-to-one name="company" ref="com.axelor.apps.gst.db.Company" required="true" title="Company" default="defaultC"/>
-    <string name="reference" title="Reference" readonly="true" sequence=""/>
+    <string name="reference" title="Reference" readonly="true"/>
     <datetime name="invoiceDateT" title="Date"/>
     <integer name="priority" title="Priority"/>
     <many-to-one name="party" ref="com.axelor.apps.gst.db.Party" required="true" title="Party"/>

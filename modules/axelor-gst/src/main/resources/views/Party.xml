@@ -29,10 +29,9 @@
       <field name="isSupplier" />
     </panel>
     <panel>
-      <field name="contactList" colSpan="12"/>
-      <field name="addressList" colSpan="12"/>
+      <field name="contactList" colSpan="12" />
+      <field name="addressList" colSpan="12" />
     </panel>
-
   </form>
 
 </object-views>

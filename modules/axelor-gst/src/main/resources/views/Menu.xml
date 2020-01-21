@@ -94,7 +94,7 @@
   </action-view>
 
   <menuitem title="Sequence" name="gst-root-company-sequence" parent="gst-root-company" action="action.gst.view.sequence"/>
-    <action-view name="action.gst.view.sequence" title="Bank Account" model="com.axelor.apps.gst.db.Sequence">
+    <action-view name="action.gst.view.sequence" title="Sequence" model="com.axelor.apps.gst.db.Sequence">
     <view type="grid" name="sequence-grid" />
     <view type="form" name="sequence-form" />
   </action-view>

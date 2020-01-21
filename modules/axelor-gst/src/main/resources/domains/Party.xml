@@ -6,10 +6,8 @@
 
   <module package="com.axelor.apps.gst.db" name="gst" />
 
-  <sequence name="gst.party.reference.sequence" increment="1" initial="1" padding="4" prefix="G"/>
-
   <entity name="Party">
-    <string name="reference" title="Reference" sequence="gst.party.reference.sequence" readonly="true"/>
+    <string name="reference" title="Reference" readonly="true"/>
     <string name="name" title="Name" required="true"/>
     <string name="type" title="Type" default="company" selection="gst.party.type.select" required="true"/>
     <boolean name="isCustomer" title="Customer"/>
