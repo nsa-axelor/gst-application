@@ -54,7 +54,7 @@
       <field name="partyContact" />
       <field name="invoiceAddress" />
       <field name="shippingAddress" />
-      <field name="invoiceItemList" colSpan="12" form-view="invoice-line-from" grid-view="invoice-line-grid"/>
+      <field name="invoiceItemList" colSpan="12" form-view="invoice-line-from" grid-view="invoice-line-grid" onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline"/>
     </panel>
 
     <panel>
@@ -66,6 +66,10 @@
     </panel>
   </form>
 
+  <action-method name="action-gst-method-set-total-tax-and-amount-from-invoiceline">
+    <call class="com.axelor.apps.gst.web.InvoiceController" method="calculateTotalTaxAndAmounts"/>
+  </action-method>
+
   <action-method name="action-gst-method-set-values-from-party">
     <call class="com.axelor.apps.gst.web.InvoiceController" method="setPartyPrimaryContact"/>
   </action-method>
@@ -76,13 +80,13 @@
 
   <action-record name="action-gst-record-set-default-values" model="com.axelor.apps.gst.db.Invoice">
     <field name="invoiceDateT" expr="eval: __datetime__"/>
-    <field name="company" expr="Axelor"/>
-    <field name="party" expr="Party-Test"/>
+    <field name="company" expr="eval: __repo__(Company).all().fetchOne()"/>
   </action-record>
 
   <action-group name="action-gst-group-select-validated-status">
     <action name="action-gst-record-select-validated-status"/>
     <action name="action-gst-method-generate-reference-from-sequence"/>
+    <action name="save"/>
   </action-group>
 
   <action-method name="action-gst-method-generate-reference-from-sequence">
