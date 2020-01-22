@@ -59,26 +59,26 @@ public class InvoiceController {
     invoice.setShippingAddress(address);
     response.setValues(invoice);
   }
-  
+
   public void changeShippingAddress(ActionRequest request, ActionResponse response) {
-	  Invoice invoice = request.getContext().asType(Invoice.class);
-	  Party party = invoice.getParty();
-	  System.err.println("change Shipping address");
-	  Address address;
-	  if(!invoice.getIsUseInvoiceAddressAsShipping()) {
-		  address =
-			        Query.of(Address.class)
-			            .filter("self.type = 'shipping' AND self.party = :party")
-			            .bind("party", party)
-			            .fetchOne();
-	  }else {
-		  address =
-			        Query.of(Address.class)
-			            .filter("self.type = 'invoice' AND self.party = :party")
-			            .bind("party", party)
-			            .fetchOne();
-	  }
-	  invoice.setShippingAddress(address);
-	  response.setValues(invoice);
+    Invoice invoice = request.getContext().asType(Invoice.class);
+    Party party = invoice.getParty();
+    System.err.println("change Shipping address");
+    Address address;
+    if (!invoice.getIsUseInvoiceAddressAsShipping()) {
+      address =
+          Query.of(Address.class)
+              .filter("self.type = 'shipping' AND self.party = :party")
+              .bind("party", party)
+              .fetchOne();
+    } else {
+      address =
+          Query.of(Address.class)
+              .filter("self.type = 'invoice' AND self.party = :party")
+              .bind("party", party)
+              .fetchOne();
+    }
+    invoice.setShippingAddress(address);
+    response.setValues(invoice);
   }
 }
