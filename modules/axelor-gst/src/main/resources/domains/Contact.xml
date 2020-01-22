@@ -15,6 +15,9 @@
     <string name="secondaryEmail" title="Secondary Email" />
     <string name="primaryPhone" title="Primary Phone" />
     <string name="secondaryPhone" title="Secondary Phone" />
+    <many-to-one name="party" ref="com.axelor.apps.gst.db.Party" />
+    <finder-method name="findByType" using="type"/>
+
   </entity>
 
 </domain-models>

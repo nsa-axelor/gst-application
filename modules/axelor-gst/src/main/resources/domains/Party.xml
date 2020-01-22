@@ -13,8 +13,9 @@
     <boolean name="isCustomer" title="Customer"/>
     <boolean name="isSupplier" title="Supplier"/>
     <string name="gstin" title="GSTIN" min="15" max="15" />
-    <one-to-many name="contactList" ref="com.axelor.apps.gst.db.Contact" title="Contact"/>
-    <one-to-many name="addressList" ref="com.axelor.apps.gst.db.Address" title="Address"/>
+    <one-to-many name="contactList" ref="com.axelor.apps.gst.db.Contact" title="Contact" mappedBy="party"/>
+    <one-to-many name="addressList" ref="com.axelor.apps.gst.db.Address" title="Address" mappedBy="party"/>
+    <finder-method name="findPrimaryContactByName" using="contactList" filter="contactList.type='primary'" />
   </entity>
 
 </domain-models>

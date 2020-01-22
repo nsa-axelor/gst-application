@@ -18,7 +18,6 @@
       <field name="code" />
       <field name="gstRate" />
     </panel>
-
   </form>
 
 </object-views>

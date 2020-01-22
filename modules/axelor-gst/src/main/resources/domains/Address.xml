@@ -1,19 +1,36 @@
 <domain-models
-  xmlns="http://axelor.com/xml/ns/domain-models"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+	xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
   http://axelor.com/xml/ns/domain-models/domain-models_5.2.xsd">
 
-  <module package="com.axelor.apps.gst.db" name="gst" />
+	<module package="com.axelor.apps.gst.db" name="gst" />
 
-  <entity name="Address">
-    <string name="type" title="Type" selection="gst.address.type.select" required="true" />
-    <string name="line1" title="Line 1" required="true" namecolumn="true"/>
-    <string name="line2" title="Line 2" />
-    <many-to-one name="city" ref="com.axelor.apps.gst.db.City" required="true" title="City"/>
-    <many-to-one name="state" ref="com.axelor.apps.gst.db.State" title="State"/>
-    <many-to-one name="country" ref="com.axelor.apps.gst.db.Country" required="true" title="Country"/>
-    <string name="pincode" title="Pincode" />
-  </entity>
+	<entity name="Address">
+		<string name="type" title="Type"
+			selection="gst.address.type.select" required="true" />
+		<string name="line1" title="Line 1" required="true" />
+		<string name="fullAddress" namecolumn="true"
+			search="line1,line2,city,pincode"> 
+		    <![CDATA[
+			    if (line1 == null && line2 == null)
+			        return null;
+			    if (city == null)
+			        return line1 + " " + line2;
+			    if (pincode == null)
+			    return line1 + " " + line2;
+		  	]]>
+		</string>
+		<string name="line2" title="Line 2" />
+		<many-to-one name="city" ref="com.axelor.apps.gst.db.City"
+			required="true" title="City" />
+		<many-to-one name="state"
+			ref="com.axelor.apps.gst.db.State" title="State" />
+		<many-to-one name="country"
+			ref="com.axelor.apps.gst.db.Country" required="true" title="Country" />
+		<many-to-one name="party"
+			ref="com.axelor.apps.gst.db.Party" />
+		<string name="pincode" title="Pincode" />
+	</entity>
 
 </domain-models>
