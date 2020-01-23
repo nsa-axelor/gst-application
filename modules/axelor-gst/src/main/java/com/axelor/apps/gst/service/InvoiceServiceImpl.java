@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.axelor.apps.gst.db.Address;
+import com.axelor.apps.gst.db.Company;
 import com.axelor.apps.gst.db.Invoice;
 import com.axelor.apps.gst.db.InvoiceLine;
 import com.axelor.apps.gst.db.Party;
@@ -46,13 +47,14 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public Address getAddressForShipping(Invoice invoice, Party party) {
+	public Address getAddressForShipping(Invoice invoice, Party party, Company company) {
 		if (!invoice.getIsUseInvoiceAddressAsShipping()) {
 			return Query.of(Address.class).filter("self.type = 'shipping' AND self.party = :party").bind("party", party)
 					.fetchOne();
 		}
-		return Query.of(Address.class).filter("self.type = 'invoice' AND self.party = :party").bind("party", party)
-				.fetchOne();
+//		return Query.of(Address.class).filter("self.type = 'invoice' AND self.company = :company")
+//				.bind("company", company).fetchOne();
+		return company.getAddress();
 	}
 
 	@Override

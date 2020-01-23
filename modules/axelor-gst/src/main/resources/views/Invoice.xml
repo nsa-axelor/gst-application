@@ -37,14 +37,14 @@
 				</panel>
 				<panel>
 						<field name="reference" colSpan="12" />
-						<field name="company" />
+						<field name="company" onChange="action-gst-method-set-values-from-party"/>
 						<field name="invoiceDateT" />
 						<field name="priority" />
 						<field name="party" onChange="action-gst-method-set-values-from-party" />
 						<field name="partyContact" />
-						<field name="invoiceAddress" />
-						<field name="isUseInvoiceAddressAsShipping" colSpan="6" onChange="action-gst-method-change-shipping-address-from-party" />
-						<field name="shippingAddress" />
+						<field name="invoiceAddress" onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline"/>
+						<field name="isUseInvoiceAddressAsShipping" colSpan="6" onChange="action-gst-method-set-values-from-party" />
+						<field name="shippingAddress" onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline"/>
 						<field name="invoiceItemList" colSpan="12" form-view="invoice-line-from" grid-view="invoice-line-grid"
 								onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
 				</panel>
@@ -65,10 +65,15 @@
 		<action-method name="action-gst-method-set-values-from-party">
 				<call class="com.axelor.apps.gst.web.InvoiceController" method="setPartyPrimaryContactAndCalculations" />
 		</action-method>
+		
+<!-- 		<action-group name="action-gst-group-change-shipping-address-from-party"> -->
+<!-- 			<action name="action-gst-method-change-shipping-address-from-party"/> -->
+<!-- 			<action name="action-gst-method-set-total-tax-and-amount-from-invoiceline"/> -->
+<!-- 		</action-group> -->
 
-		<action-method name="action-gst-method-change-shipping-address-from-party">
-				<call class="com.axelor.apps.gst.web.InvoiceController" method="changeShippingAddress" />
-		</action-method>
+<!-- 		<action-method name="action-gst-method-change-shipping-address-from-party"> -->
+<!-- 				<call class="com.axelor.apps.gst.web.InvoiceController" method="changeShippingAddress" /> -->
+<!-- 		</action-method> -->
 
 		<action-record name="action-gst-record-set-default-values" model="com.axelor.apps.gst.db.Invoice">
 				<field name="invoiceDateT" expr="eval: __datetime__" />

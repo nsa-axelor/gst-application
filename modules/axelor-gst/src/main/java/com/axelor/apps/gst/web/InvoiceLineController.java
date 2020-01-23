@@ -24,11 +24,11 @@ public class InvoiceLineController {
 
 	public void calculateTaxAndAmount(ActionRequest request, ActionResponse response) {
 		try {
-		InvoiceLine line = request.getContext().asType(InvoiceLine.class);
-		Invoice parent = request.getContext().getParent().asType(Invoice.class);
-		line = service.calculateInvoiceLine(line, parent);
-		response.setValues(line);
-		}catch(Exception e) {
+			InvoiceLine line = request.getContext().asType(InvoiceLine.class);
+			Invoice parent = request.getContext().getParent().asType(Invoice.class);
+			line = service.calculateInvoiceLine(line, parent);
+			response.setValues(line);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
