@@ -26,6 +26,8 @@ public class InvoiceLineServiceImpl implements InvoiceLineService {
 			if (!invoiceAddress.getState().getName().equals(companyAddress.getState().getName())) {
 				BigDecimal igst = gstRate.multiply(netAmount).divide(new BigDecimal(100));
 				line.setIgst(igst);
+				line.setSgst(new BigDecimal(0));
+				line.setCsgt(new BigDecimal(0));
 				BigDecimal grossAmount = netAmount.add(igst);
 				line.setGrossAmount(grossAmount);
 			} else {
@@ -35,6 +37,7 @@ public class InvoiceLineServiceImpl implements InvoiceLineService {
 				cgst = cgst.divide(new BigDecimal(2));
 				line.setCsgt(cgst);
 				line.setSgst(sgst);
+				line.setIgst(new BigDecimal(0));
 				BigDecimal grossAmount = netAmount.add(cgst).add(sgst);
 				line.setGrossAmount(grossAmount);
 			}
