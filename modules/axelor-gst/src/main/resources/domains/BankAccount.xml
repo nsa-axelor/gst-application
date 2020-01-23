@@ -1,17 +1,15 @@
-<domain-models
-  xmlns="http://axelor.com/xml/ns/domain-models"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
   http://axelor.com/xml/ns/domain-models/domain-models_5.2.xsd">
 
-  <module package="com.axelor.apps.gst.db" name="gst" />
+    <module package="com.axelor.apps.gst.db" name="gst" />
 
-  <entity name="BankAccount">
-    <string name="bank" title="Bank" required="true"/>
-    <string name="accountNumber" title="Account no" required="true"/>
-    <string name="ifsc" title="IFSC" required="true" />
-    <string name="type" title="Type" default="current" selection="gst.bankaccount.type.select"/>
-    <many-to-one ref="com.axelor.apps.gst.db.Address" name="address" title="Address" />
-  </entity>
+    <entity name="BankAccount">
+        <string name="bank" title="Bank" required="true" />
+        <string name="accountNumber" title="Account no" required="true" />
+        <string name="ifsc" title="IFSC" required="true" />
+        <string name="type" title="Type" default="current" selection="gst.bankaccount.type.select" />
+        <many-to-one ref="com.axelor.apps.gst.db.Address" name="address" title="Address" />
+    </entity>
 
 </domain-models>

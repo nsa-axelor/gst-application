@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<domain-models
-  xmlns="http://axelor.com/xml/ns/domain-models"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
   http://axelor.com/xml/ns/domain-models/domain-models_5.2.xsd">
 
-  <module package="com.axelor.apps.gst.db" name="gst" />
+    <module package="com.axelor.apps.gst.db" name="gst" />
 
-  <entity name="Company">
-    <string name="name" title="Name" required="true" />
-    <many-to-one name="logo" ref="com.axelor.meta.db.MetaFile"
-      title="Logo" />
-    <one-to-many name="contactList" title="Contacts"
-      ref="com.axelor.apps.gst.db.Contact" />
-    <string name="gstin" title="GSTIN" min="15" max="15" />
-    <one-to-many name="bankDetailList" ref="com.axelor.apps.gst.db.BankAccount" title="Bank Details"/>
-    <many-to-one name="address" ref="com.axelor.apps.gst.db.Address" title="Address"/>
-  </entity>
+    <entity name="Company">
+        <string name="name" title="Name" required="true" />
+        <many-to-one name="logo" ref="com.axelor.meta.db.MetaFile" title="Logo" />
+        <one-to-many name="contactList" title="Contacts" ref="com.axelor.apps.gst.db.Contact" />
+        <string name="gstin" title="GSTIN" min="15" max="15" />
+        <one-to-many name="bankDetailList" ref="com.axelor.apps.gst.db.BankAccount" title="Bank Details" />
+        <many-to-one name="address" ref="com.axelor.apps.gst.db.Address" title="Address" />
+    </entity>
 
 </domain-models>

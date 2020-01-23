@@ -1,21 +1,19 @@
-<domain-models
-  xmlns="http://axelor.com/xml/ns/domain-models"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
   http://axelor.com/xml/ns/domain-models/domain-models_5.2.xsd">
 
-  <module package="com.axelor.apps.gst.db" name="gst" />
+    <module package="com.axelor.apps.gst.db" name="gst" />
 
-  <entity name="Party">
-    <string name="reference" title="Reference" readonly="true"/>
-    <string name="name" title="Name" required="true"/>
-    <string name="type" title="Type" default="company" selection="gst.party.type.select" required="true"/>
-    <boolean name="isCustomer" title="Customer"/>
-    <boolean name="isSupplier" title="Supplier"/>
-    <string name="gstin" title="GSTIN" min="15" max="15" />
-    <one-to-many name="contactList" ref="com.axelor.apps.gst.db.Contact" title="Contact" mappedBy="party"/>
-    <one-to-many name="addressList" ref="com.axelor.apps.gst.db.Address" title="Address" mappedBy="party"/>
-    <finder-method name="findPrimaryContactByName" using="contactList" filter="contactList.type='primary'" />
-  </entity>
+    <entity name="Party">
+        <string name="reference" title="Reference" readonly="true" />
+        <string name="name" title="Name" required="true" />
+        <string name="type" title="Type" default="company" selection="gst.party.type.select" required="true" />
+        <boolean name="isCustomer" title="Customer" />
+        <boolean name="isSupplier" title="Supplier" />
+        <string name="gstin" title="GSTIN" min="15" max="15" />
+        <one-to-many name="contactList" ref="com.axelor.apps.gst.db.Contact" title="Contact" mappedBy="party" />
+        <one-to-many name="addressList" ref="com.axelor.apps.gst.db.Address" title="Address" mappedBy="party" />
+        <finder-method name="findPrimaryContactByName" using="contactList" filter="contactList.type='primary'" />
+    </entity>
 
 </domain-models>

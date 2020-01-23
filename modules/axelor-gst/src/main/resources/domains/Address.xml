@@ -8,15 +8,19 @@
         <string name="type" title="Type" selection="gst.address.type.select" required="true" />
         <string name="line1" title="Line 1" required="true" />
         <string name="fullAddress" namecolumn="true" search="line1,line2,city,pincode">
-            <![CDATA[
-              if (line1 == null && line2 == null)
-                  return null;
-              if (city.getName() == null)
-                  return line1 + " " + line2;
-              if (pincode == null)
-                return line1 + " " + line2 + " " + city.getName();
-              return line1 + " " + line2 + " " + city.getName() + " " + pincode;
-            ]]>
+                <![CDATA[
+                  if (line1 == null && line2 == null)
+                      return null;
+                  if (city.getName() == null)
+                      return line1 + " " + line2;
+                  if(line2 == null && pincode == null)
+                    return line1 + " " + city.getName();
+                  if(line2 == null)
+                    return line1 + " " + city.getName() + " " + pincode;
+                  if (pincode == null)
+                    return line1 + " " + line2 + " " + city.getName();
+                  return line1 + " " + line2 + " " + city.getName() + " " + pincode;
+                ]]>
         </string>
         <string name="line2" title="Line 2" />
         <many-to-one name="city" ref="com.axelor.apps.gst.db.City" required="true" title="City" />
