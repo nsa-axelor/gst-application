@@ -20,63 +20,56 @@ import java.util.List;
 
 public class InvoiceController {
 
-  @Inject SequenceService sequenceService;
-  @Inject InvoiceService invoiceService;
+	@Inject
+	SequenceService sequenceService;
+	@Inject
+	InvoiceService invoiceService;
 
-  @Transactional
-  public void generateNewSequence(ActionRequest request, ActionResponse response) {
-    MetaModelRepository metaModelRepository = Beans.get(MetaModelRepository.class);
-    MetaModel model = metaModelRepository.findByName("Invoice");
-    Sequence sequence = sequenceService.findSequenceByModel(model);
-    response.setValue("reference", sequenceService.generateSequence(sequence));
-  }
+	@Transactional
+	public void generateNewSequence(ActionRequest request, ActionResponse response) {
+		MetaModelRepository metaModelRepository = Beans.get(MetaModelRepository.class);
+		MetaModel model = metaModelRepository.findByName("Invoice");
+		Sequence sequence = sequenceService.findSequenceByModel(model);
+		response.setValue("reference", sequenceService.generateSequence(sequence));
+	}
 
-  public void setPartyPrimaryContact(ActionRequest request, ActionResponse response) {
-    System.err.println("set partyContact");
-    Invoice invoice = request.getContext().asType(Invoice.class);
-    Party party = invoice.getParty();
-    Contact contact =
-        Query.of(Contact.class)
-            .filter("self.type = 'primary' AND self.party = :party")
-            .bind("party", party)
-            .fetchOne();
-    Address address =
-        Query.of(Address.class)
-            .filter("self.type = 'invoice' AND self.party = :party")
-            .bind("party", party)
-            .fetchOne();
-    // List<Contact> contacts = party.getContactList();
-    // Contact contact = Query.of(Contact.class).filter("self.type = 'primary' AND
-    // party.contact
-    // = :self").bind("party",party).fetchOne();
-    /*
-     * List<Contact> primaryContacts =
-     * Query.of(Contact.class).filter("self.type = 'primary'").bind("party",party).
-     * fetch(); int n = 0; primaryContacts.forEach(primaryContact->{
-     * if(contacts.get(n).getType()) });
-     *
-     * invoice.setPartyContact(contact); System.err.println("Contact : " +
-     * contact.getName());
-     */
-    System.err.println("Contact: " + contact.getName());
-    invoice.setPartyContact(contact);
-    invoice.setInvoiceAddress(address);
-    invoice.setShippingAddress(address);
-    response.setValues(invoice);
-  }
+	public void setPartyPrimaryContactAndCalculations(ActionRequest request, ActionResponse response) {
+		Invoice invoice = request.getContext().asType(Invoice.class);
+		try {
+			Party party = invoice.getParty();
+			Contact contact = Query.of(Contact.class).filter("self.type = 'primary' AND self.party = :party")
+					.bind("party", party).fetchOne();
+			Address address = Query.of(Address.class).filter("self.type = 'invoice' AND self.party = :party")
+					.bind("party", party).fetchOne();
+			invoice.setPartyContact(contact);
+			invoice.setInvoiceAddress(address);
+			invoice.setShippingAddress(address);
+			List<InvoiceLine> lineList = invoice.getInvoiceItemList();
+			invoice.setInvoiceItemList(invoiceService.regenerateInvoiceLine(invoice));
+			invoice = invoiceService.getCalculatedInvoice(invoice, lineList);
+		} catch (NullPointerException e) {
+			 e.printStackTrace();
+		}
+		response.setValues(invoice);
+	}
 
-  public void changeShippingAddress(ActionRequest request, ActionResponse response) {
-    Invoice invoice = request.getContext().asType(Invoice.class);
-    Party party = invoice.getParty();
-    Address address = invoiceService.getAddressForShipping(invoice, party);
-    invoice.setShippingAddress(address);
-    response.setValues(invoice);
-  }
+	public void changeShippingAddress(ActionRequest request, ActionResponse response) {
+		Invoice invoice = request.getContext().asType(Invoice.class);
+		Party party = invoice.getParty();
+		Address address = invoiceService.getAddressForShipping(invoice, party);
+		invoice.setShippingAddress(address);
+		response.setValues(invoice);
+	}
 
-  public void calculateTotalTaxAndAmounts(ActionRequest request, ActionResponse response) {
-    Invoice invoice = request.getContext().asType(Invoice.class);
-    List<InvoiceLine> lineList = invoice.getInvoiceItemList();
-    invoice = invoiceService.getCalculatedInvoice(invoice, lineList);
-    response.setValues(invoice);
-  }
+	public void calculateTotalTaxAndAmounts(ActionRequest request, ActionResponse response) {
+		try {
+		Invoice invoice = request.getContext().asType(Invoice.class);
+		List<InvoiceLine> lineList = invoice.getInvoiceItemList();
+		invoice.setInvoiceItemList(invoiceService.regenerateInvoiceLine(invoice));
+		invoice = invoiceService.getCalculatedInvoice(invoice, lineList);
+		response.setValues(invoice);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }

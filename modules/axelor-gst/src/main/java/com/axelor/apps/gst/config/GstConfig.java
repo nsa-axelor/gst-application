@@ -3,11 +3,12 @@ package com.axelor.apps.gst.config;
 import com.axelor.app.AxelorModule;
 import com.axelor.apps.gst.db.repo.PartyGstRepository;
 import com.axelor.apps.gst.db.repo.PartyRepository;
+import com.axelor.apps.gst.service.InvoiceLineService;
+import com.axelor.apps.gst.service.InvoiceLineServiceImpl;
 import com.axelor.apps.gst.service.InvoiceService;
 import com.axelor.apps.gst.service.InvoiceServiceImpl;
 import com.axelor.apps.gst.service.SequenceService;
 import com.axelor.apps.gst.service.SequenceServiceImpl;
-import com.axelor.apps.gst.web.InvoiceController;
 
 public class GstConfig extends AxelorModule {
   @Override
@@ -15,6 +16,7 @@ public class GstConfig extends AxelorModule {
     bind(SequenceService.class).to(SequenceServiceImpl.class);
     bind(PartyRepository.class).to(PartyGstRepository.class);
     bind(InvoiceService.class).to(InvoiceServiceImpl.class);
-    bind(InvoiceController.class);
+    bind(InvoiceLineService.class).to(InvoiceLineServiceImpl.class);
+//    bind(InvoiceController.class);
   }
 }

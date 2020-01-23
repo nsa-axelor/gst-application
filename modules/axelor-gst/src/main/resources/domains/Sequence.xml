@@ -9,7 +9,7 @@
         <string name="prefix" required="true" title="Prefix" />
         <string name="suffix" title="Suffix" />
         <integer name="padding" title="Padding" min="1" max="10" />
-        <string name="nextNumber" title="Next Number" />
+        <string name="nextNumber" title="Next Number" readonly="true" default="1"/>
         <many-to-one name="model" ref="com.axelor.meta.db.MetaModel" />
         <finder-method name="findByModel" using="model" />
     </entity>

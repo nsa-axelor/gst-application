@@ -1,3 +1,9 @@
 package com.axelor.apps.gst.service;
 
-public interface InvoiceLineService {}
+import com.axelor.apps.gst.db.Invoice;
+import com.axelor.apps.gst.db.InvoiceLine;
+
+public interface InvoiceLineService {
+	
+	public InvoiceLine calculateInvoiceLine(InvoiceLine line, Invoice parent);
+}

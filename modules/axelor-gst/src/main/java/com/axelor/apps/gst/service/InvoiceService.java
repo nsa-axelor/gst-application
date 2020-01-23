@@ -10,4 +10,6 @@ public interface InvoiceService {
   public Invoice getCalculatedInvoice(Invoice invoice, List<InvoiceLine> lineList);
 
   public Address getAddressForShipping(Invoice invoice, Party party);
+  
+  public List<InvoiceLine> regenerateInvoiceLine(Invoice invoice);
 }
