@@ -1,132 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+    xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
-		<grid model="com.axelor.apps.gst.db.Invoice" title="Invoice Grid" name="invoice-grid">
-				<field name="statusSelect" />
-				<field name="company" />
-				<field name="reference" />
-				<field name="invoiceDateT" />
-				<field name="priority" />
-				<field name="party" />
-				<field name="partyContact" />
-				<field name="invoiceAddress" />
-				<field name="shippingAddress" />
-				<field name="isUseInvoiceAddressAsShipping" />
-				<field name="netAmount" />
-				<field name="netIgst" />
-				<field name="netCsgt" />
-				<field name="netSgst" />
-				<field name="grossAmount" />
-				<field name="invoiceItemList" />
-		</grid>
+    <grid model="com.axelor.apps.gst.db.Invoice" title="Invoice Grid" name="invoice-grid">
+        <field name="statusSelect" />
+        <field name="company" />
+        <field name="reference" />
+        <field name="invoiceDateT" />
+        <field name="priority" />
+        <field name="party" />
+        <field name="partyContact" />
+        <field name="invoiceAddress" />
+        <field name="shippingAddress" />
+        <field name="isUseInvoiceAddressAsShipping" />
+        <field name="netAmount" />
+        <field name="netIgst" />
+        <field name="netCsgt" />
+        <field name="netSgst" />
+        <field name="grossAmount" />
+        <field name="invoiceItemList" />
+    </grid>
 
-		<form model="com.axelor.apps.gst.db.Invoice" title="Invoice Form" name="invoice-form" onNew="action-gst-record-set-default-values">
-				<toolbar>
-					<button name="invoiceReportBtn" title="Invoice Report" onClick="action-gst-report-generate-invoice-report"/>
-				</toolbar>
-				<panel>
-						<panel colSpan="8">
-								<field name="statusSelect" widget="NavSelect" colSpan="12" />
-						</panel>
-						<panel colSpan="4">
-								<button name="DraftBtn" colSpan="12" onClick="action-gst-group-select-draft-status" title="Draft" showIf="statusSelect=='cancelled' || statusSelect=='paid'" />
-								<button name="ValidatedBtn" colSpan="12" onClick="action-gst-group-select-validated-status" title="Validate" showIf="statusSelect=='draft'" />
-								<button name="PaidBtn" colSpan="12" css="hilite-success" onClick="action-gst-group-select-paid-status" title="Paid" showIf="statusSelect == 'validated'" />
-								<button name="CancelledBtn" colSpan="12" css="hilite-danger" onClick="action-gst-group-select-cancelled-status" title="Cancel"
-										showIf="statusSelect == 'validated'" />
-						</panel>
-				</panel>
-				<panel>
-						<field name="reference" colSpan="12" />
-						<field name="company" onChange="action-gst-method-set-values-from-party" />
-						<field name="invoiceDateT" />
-						<field name="priority" />
-						<field name="party" onChange="action-gst-method-set-values-from-party" />
-						<field name="partyContact" />
-						<field name="invoiceAddress" onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
-						<field name="isUseInvoiceAddressAsShipping" colSpan="6" onChange="action-gst-method-set-values-from-party" />
-						<field name="shippingAddress" onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
-						<field name="invoiceItemList" colSpan="12" form-view="invoice-line-from" grid-view="invoice-line-grid"
-								onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
-				</panel>
+    <form model="com.axelor.apps.gst.db.Invoice" title="Invoice Form" name="invoice-form" onNew="action-gst-record-set-default-values">
+        <toolbar>
+          <button name="invoiceReportBtn" title="Invoice Report" onClick="action-gst-report-generate-invoice-report"/>
+        </toolbar>
+        <panel>
+            <panel colSpan="8">
+                <field name="statusSelect" widget="NavSelect" colSpan="12" />
+            </panel>
+            <panel colSpan="4">
+                <button name="DraftBtn" colSpan="12" onClick="action-gst-group-select-draft-status" title="Draft" showIf="statusSelect=='cancelled' || statusSelect=='paid'" />
+                <button name="ValidatedBtn" colSpan="12" onClick="action-gst-group-select-validated-status" title="Validate" showIf="statusSelect=='draft'" />
+                <button name="PaidBtn" colSpan="12" css="hilite-success" onClick="action-gst-group-select-paid-status" title="Paid" showIf="statusSelect == 'validated'" />
+                <button name="CancelledBtn" colSpan="12" css="hilite-danger" onClick="action-gst-group-select-cancelled-status" title="Cancel"
+                    showIf="statusSelect == 'validated'" />
+            </panel>
+        </panel>
+        <panel>
+            <field name="reference" colSpan="12" />
+            <field name="company" onChange="action-gst-method-set-values-from-party" />
+            <field name="invoiceDateT" />
+            <field name="priority" />
+            <field name="party" onChange="action-gst-method-set-values-from-party" />
+            <field name="partyContact" />
+            <field name="invoiceAddress" onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
+            <field name="isUseInvoiceAddressAsShipping" colSpan="6" onChange="action-gst-method-set-values-from-party" />
+            <field name="shippingAddress" onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
+            <field name="invoiceItemList" colSpan="12" form-view="invoice-line-from" grid-view="invoice-line-grid"
+                onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
+        </panel>
 
-				<panel>
-						<field name="netAmount" />
-						<field name="netIgst" />
-						<field name="netCsgt" />
-						<field name="netSgst" />
-						<field name="grossAmount" />
-				</panel>
-		</form>
+        <panel>
+            <field name="netAmount" />
+            <field name="netIgst" />
+            <field name="netCsgt" />
+            <field name="netSgst" />
+            <field name="grossAmount" />
+        </panel>
+    </form>
 
-		<action-method name="action-gst-method-set-total-tax-and-amount-from-invoiceline">
-				<call class="com.axelor.apps.gst.web.InvoiceController" method="calculateTotalTaxAndAmounts" />
-		</action-method>
+    <action-method name="action-gst-method-set-total-tax-and-amount-from-invoiceline">
+        <call class="com.axelor.apps.gst.web.InvoiceController" method="calculateTotalTaxAndAmounts" />
+    </action-method>
 
-		<action-method name="action-gst-method-set-values-from-party">
-				<call class="com.axelor.apps.gst.web.InvoiceController" method="setPartyPrimaryContactAndCalculations" />
-		</action-method>
+    <action-method name="action-gst-method-set-values-from-party">
+        <call class="com.axelor.apps.gst.web.InvoiceController" method="setPartyPrimaryContactAndCalculations" />
+    </action-method>
 
-		<!-- <action-group name="action-gst-group-change-shipping-address-from-party"> -->
-		<!-- <action name="action-gst-method-change-shipping-address-from-party"/> -->
-		<!-- <action name="action-gst-method-set-total-tax-and-amount-from-invoiceline"/> -->
-		<!-- </action-group> -->
+    <!-- <action-group name="action-gst-group-change-shipping-address-from-party"> -->
+    <!-- <action name="action-gst-method-change-shipping-address-from-party"/> -->
+    <!-- <action name="action-gst-method-set-total-tax-and-amount-from-invoiceline"/> -->
+    <!-- </action-group> -->
 
-		<!-- <action-method name="action-gst-method-change-shipping-address-from-party"> -->
-		<!-- <call class="com.axelor.apps.gst.web.InvoiceController" method="changeShippingAddress" /> -->
-		<!-- </action-method> -->
+    <!-- <action-method name="action-gst-method-change-shipping-address-from-party"> -->
+    <!-- <call class="com.axelor.apps.gst.web.InvoiceController" method="changeShippingAddress" /> -->
+    <!-- </action-method> -->
 
-		<action-record name="action-gst-record-set-default-values" model="com.axelor.apps.gst.db.Invoice">
-				<field name="invoiceDateT" expr="eval: __datetime__" />
-				<field name="company" expr="eval: __repo__(Company).all().fetchOne()" />
-		</action-record>
+    <action-record name="action-gst-record-set-default-values" model="com.axelor.apps.gst.db.Invoice">
+        <field name="invoiceDateT" expr="eval: __datetime__" />
+        <field name="company" expr="eval: __repo__(Company).all().fetchOne()" />
+    </action-record>
 
-		<action-group name="action-gst-group-select-validated-status">
-				<action name="action-gst-record-select-validated-status" />
-				<action name="action-gst-method-generate-reference-from-sequence" />
-				<action name="save" />
-		</action-group>
+    <action-group name="action-gst-group-select-validated-status">
+        <action name="action-gst-record-select-validated-status" />
+        <action name="action-gst-method-generate-reference-from-sequence" />
+        <action name="save" />
+    </action-group>
 
-		<action-group name="action-gst-group-select-draft-status">
-				<action name="action-gst-record-select-draft-status" />
-				<action name="save" />
-		</action-group>
+    <action-group name="action-gst-group-select-draft-status">
+        <action name="action-gst-record-select-draft-status" />
+        <action name="save" />
+    </action-group>
 
-		<action-method name="action-gst-method-generate-reference-from-sequence">
-				<call class="com.axelor.apps.gst.web.InvoiceController" method="generateNewSequence" />
-		</action-method>
+    <action-method name="action-gst-method-generate-reference-from-sequence">
+        <call class="com.axelor.apps.gst.web.InvoiceController" method="generateNewSequence" />
+    </action-method>
 
-		<action-record name="action-gst-record-select-draft-status" model="com.axelor.apps.gst.db.Invoice">
-				<field name="statusSelect" expr="draft" />
-		</action-record>
+    <action-record name="action-gst-record-select-draft-status" model="com.axelor.apps.gst.db.Invoice">
+        <field name="statusSelect" expr="draft" />
+    </action-record>
 
-		<action-group name="action-gst-group-select-paid-status">
-				<action name="action-gst-record-select-paid-status" />
-				<action name="save" />
-		</action-group>
+    <action-group name="action-gst-group-select-paid-status">
+        <action name="action-gst-record-select-paid-status" />
+        <action name="save" />
+    </action-group>
 
-		<action-group name="action-gst-group-select-cancelled-status">
-				<action name="action-gst-record-select-cancelled-status" />
-				<action name="save" />
-		</action-group>
+    <action-group name="action-gst-group-select-cancelled-status">
+        <action name="action-gst-record-select-cancelled-status" />
+        <action name="save" />
+    </action-group>
 
-		<action-record name="action-gst-record-select-validated-status" model="com.axelor.apps.gst.db.Invoice">
-				<field name="statusSelect" expr="validated" />
-		</action-record>
+    <action-record name="action-gst-record-select-validated-status" model="com.axelor.apps.gst.db.Invoice">
+        <field name="statusSelect" expr="validated" />
+    </action-record>
 
-		<action-record name="action-gst-record-select-paid-status" model="com.axelor.apps.gst.db.Invoice">
-				<field name="statusSelect" expr="paid" />
-		</action-record>
+    <action-record name="action-gst-record-select-paid-status" model="com.axelor.apps.gst.db.Invoice">
+        <field name="statusSelect" expr="paid" />
+    </action-record>
 
-		<action-record name="action-gst-record-select-cancelled-status" model="com.axelor.apps.gst.db.Invoice">
-				<field name="statusSelect" expr="cancelled" />
-		</action-record>
+    <action-record name="action-gst-record-select-cancelled-status" model="com.axelor.apps.gst.db.Invoice">
+        <field name="statusSelect" expr="cancelled" />
+    </action-record>
 
-		<action-report output="Invoice" name="action-gst-report-generate-invoice-report" design="invoice_report.rptdesign">
-				<param name="invoice_id" expr="eval: __self__.id" />
-				<param name="attechment_path" expr='eval: com?.axelor?.app?.AppSettings?.get()?.getPath("file.upload.dir", "")+"/"' />
-		</action-report>
+    <action-report output="Invoice" name="action-gst-report-generate-invoice-report" design="invoice_report.rptdesign">
+        <param name="invoice_id" expr="eval: __self__.id" />
+        <param name="attechment_path" expr='eval: com?.axelor?.app?.AppSettings?.get()?.getPath("file.upload.dir", "")+"/"' />
+    </action-report>
 
 </object-views>

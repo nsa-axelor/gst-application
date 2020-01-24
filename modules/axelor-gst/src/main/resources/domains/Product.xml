@@ -11,7 +11,7 @@
         <many-to-one name="category" ref="com.axelor.apps.gst.db.ProductCategory" />
         <decimal name="salePrice" title="Sale price" />
         <decimal name="costPrice" title="Cost price" />
-        <binary name="image" title="Image" image="true" />
+        <many-to-one name="image" ref="com.axelor.meta.db.MetaFile" title="Image" />
         <decimal name="gstRate" title="GST rate" />
     </entity>
 

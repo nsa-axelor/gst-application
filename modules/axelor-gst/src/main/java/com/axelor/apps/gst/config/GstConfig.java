@@ -17,6 +17,6 @@ public class GstConfig extends AxelorModule {
     bind(PartyRepository.class).to(PartyGstRepository.class);
     bind(InvoiceService.class).to(InvoiceServiceImpl.class);
     bind(InvoiceLineService.class).to(InvoiceLineServiceImpl.class);
-//    bind(InvoiceController.class);
+    //    bind(InvoiceController.class);
   }
 }

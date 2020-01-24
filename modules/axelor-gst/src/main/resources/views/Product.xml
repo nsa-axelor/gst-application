@@ -15,6 +15,9 @@
     </grid>
 
     <form model="com.axelor.apps.gst.db.Product" title="Product Form" name="product-form">
+        <toolbar>
+          <button name="productReportBtn" onClick="action-gst-report-generate-product-report" title="Product Report" />
+        </toolbar>
         <panel>
             <panel colSpan="9">
                 <field name="name" />
@@ -22,7 +25,7 @@
                 <field name="hsbn" />
             </panel>
             <panel colSpan="3">
-                <field name="image" />
+                <field name="image" widget="image"/>
             </panel>
 
         </panel>
@@ -37,5 +40,10 @@
     <action-record name="action-gst-record-set-gstrate-from-product-category" model="com.axelor.apps.gst.db.Product">
         <field name="gstRate" expr="eval: __this__.category.gstRate" />
     </action-record>
+
+    <action-report output="Product" name="action-gst-report-generate-product-report" design="product_report.rptdesign">
+        <param name="product_id" expr="eval: __self__.id" />
+        <param name="attechment_path" expr='eval: com?.axelor?.app?.AppSettings?.get()?.getPath("file.upload.dir", "")+"/"' />
+    </action-report>
 
 </object-views>
