@@ -6,6 +6,7 @@ import com.axelor.apps.gst.db.Contact;
 import com.axelor.apps.gst.db.Invoice;
 import com.axelor.apps.gst.db.InvoiceLine;
 import com.axelor.apps.gst.db.Party;
+import com.axelor.apps.gst.db.Product;
 import com.axelor.apps.gst.db.Sequence;
 import com.axelor.apps.gst.service.InvoiceService;
 import com.axelor.apps.gst.service.SequenceService;
@@ -85,5 +86,11 @@ public class InvoiceController {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+  
+  public void onClickSelectProductsIntoInvoiceLine(ActionRequest request, ActionResponse response) {
+	  Product invoice = request.getContext().asType(Product.class);
+	  System.err.println(request.getData());
+	  
   }
 }

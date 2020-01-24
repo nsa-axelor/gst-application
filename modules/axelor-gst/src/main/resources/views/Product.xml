@@ -4,6 +4,9 @@
   http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
 		<grid model="com.axelor.apps.gst.db.Product" title="Product Grid" name="product-grid">
+				<toolbar>
+						<button name="createInvoiceBtn" title="Create Invoice" onClick="action-gst-method-open-invoice-form-with-product" />
+				</toolbar>
 				<field name="name" />
 				<field name="code" />
 				<field name="hsbn" />
@@ -16,7 +19,7 @@
 
 		<form model="com.axelor.apps.gst.db.Product" title="Product Form" name="product-form">
 				<toolbar>
-						<button name="productReportBtn" onClick="action-gst-report-generate-product-report" title="Product Report" />
+						<button name="productReportBtn" onClick="action-gst-report-generate-product-report" title="Print" />
 				</toolbar>
 				<panel>
 						<panel colSpan="9">
@@ -36,6 +39,16 @@
 						<field name="gstRate" />
 				</panel>
 		</form>
+		
+		<action-method name="action-gst-method-open-invoice-form-with-product">
+			<call class="com.axelor.apps.gst.web.InvoiceController" method="onClickSelectProductsIntoInvoiceLine"/>
+		</action-method>
+
+		<action-view name="action-gst-view-open-invoice-form-with-product" title="Invoice Form" model="com.axelor.apps.gst.db.Invoice">
+				<view type="form" name="invoice-form" />
+				<domain>self.invoiceItemList = :selectedProducts </domain>
+				<context name="selectedProducts" expr=""/>
+		</action-view>
 
 		<cards name="product-card" model="com.axelor.apps.gst.db.Product" title="Product cards">
 				<field name="name" />

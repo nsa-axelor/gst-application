@@ -55,11 +55,11 @@
 			             		MONTH(_invoice.invoiceDateT) AS month
 			              FROM
 			                  InvoiceLine self
-			              LEFT JOIN
+			              INNER JOIN
 			              		self.product AS _product
-			              LEFT JOIN
+			              INNER JOIN
 			                  	_product.category AS _category
-			              LEFT JOIN
+			              INNER JOIN
 			              		self.invoice AS _invoice
 			              WHERE
 			                  YEAR(_invoice.invoiceDateT) = YEAR(current_date)
