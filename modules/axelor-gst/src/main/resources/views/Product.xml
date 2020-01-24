@@ -1,49 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+		xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
-    <grid model="com.axelor.apps.gst.db.Product" title="Product Grid" name="product-grid">
-        <field name="name" />
-        <field name="code" />
-        <field name="hsbn" />
-        <field name="category" />
-        <field name="salePrice" />
-        <field name="costPrice" />
-        <field name="image" />
-        <field name="gstRate" />
-    </grid>
+		<grid model="com.axelor.apps.gst.db.Product" title="Product Grid" name="product-grid">
+				<field name="name" />
+				<field name="code" />
+				<field name="hsbn" />
+				<field name="category" />
+				<field name="salePrice" />
+				<field name="costPrice" />
+				<field name="image" />
+				<field name="gstRate" />
+		</grid>
 
-    <form model="com.axelor.apps.gst.db.Product" title="Product Form" name="product-form">
-        <toolbar>
-          <button name="productReportBtn" onClick="action-gst-report-generate-product-report" title="Product Report" />
-        </toolbar>
-        <panel>
-            <panel colSpan="9">
-                <field name="name" />
-                <field name="code" />
-                <field name="hsbn" />
-            </panel>
-            <panel colSpan="3">
-                <field name="image" widget="image"/>
-            </panel>
+		<form model="com.axelor.apps.gst.db.Product" title="Product Form" name="product-form">
+				<toolbar>
+						<button name="productReportBtn" onClick="action-gst-report-generate-product-report" title="Product Report" />
+				</toolbar>
+				<panel>
+						<panel colSpan="9">
+								<field name="name" />
+								<field name="code" />
+								<field name="hsbn" />
+						</panel>
+						<panel colSpan="3">
+								<field name="image" widget="image" />
+						</panel>
 
-        </panel>
-        <panel>
-            <field name="category" onChange="action-gst-record-set-gstrate-from-product-category" />
-            <field name="salePrice" />
-            <field name="costPrice" />
-            <field name="gstRate" />
-        </panel>
-    </form>
+				</panel>
+				<panel>
+						<field name="category" onChange="action-gst-record-set-gstrate-from-product-category" />
+						<field name="salePrice" />
+						<field name="costPrice" />
+						<field name="gstRate" />
+				</panel>
+		</form>
 
-    <action-record name="action-gst-record-set-gstrate-from-product-category" model="com.axelor.apps.gst.db.Product">
-        <field name="gstRate" expr="eval: __this__.category.gstRate" />
-    </action-record>
+		<cards name="product-card" model="com.axelor.apps.gst.db.Product" title="Product cards">
+				<field name="name" />
+				<field name="code" />
+				<field name="hsbn" />
+				<field name="category" />
+				<field name="salePrice" />
+				<field name="costPrice" />
+				<field name="image" />
+				<field name="gstRate" />
+				<template>
+					<![CDATA[
+				      <div class="span4 card-image">
+					    <img  ng-src="{{$image(image, 'image')}}">
+					    <strong>{{name}}</strong>
+					    </div>
+					   <div class="span8">
+					       <span><b>Category  &nbsp;&nbsp;</b>{{category.name}}</span></br></br>
+					      <span> <b>Saleprice &nbsp;&nbsp; </b>{{salePrice}}</span></br>
+					      <span> <b>Costprice &nbsp;&nbsp; </b>{{costPrice}}</span></br>
+					   </div>
+    				]]>
+    			</template>
+		</cards>
 
-    <action-report output="Product" name="action-gst-report-generate-product-report" design="product_report.rptdesign">
-        <param name="product_id" expr="eval: __self__.id" />
-        <param name="attechment_path" expr='eval: com?.axelor?.app?.AppSettings?.get()?.getPath("file.upload.dir", "")+"/"' />
-    </action-report>
+		<action-record name="action-gst-record-set-gstrate-from-product-category" model="com.axelor.apps.gst.db.Product">
+				<field name="gstRate" expr="eval: __this__.category.gstRate" />
+		</action-record>
+
+		<action-report output="Product" name="action-gst-report-generate-product-report" design="product_report.rptdesign">
+				<param name="product_id" expr="eval: __self__.id" />
+				<param name="attechment_path" expr='eval: com?.axelor?.app?.AppSettings?.get()?.getPath("file.upload.dir", "")+"/"' />
+		</action-report>
 
 </object-views>

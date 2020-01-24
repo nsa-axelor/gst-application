@@ -1,60 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+		xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
-    <grid model="com.axelor.apps.gst.db.Party" title="Party Grid" name="party-grid">
-        <field name="reference" />
-        <field name="name" />
-        <field name="type" />
-        <field name="isCustomer" />
-        <field name="isSupplier" />
-        <field name="gstin" />
-        <field name="contactList" />
-        <field name="addressList" />
-    </grid>
+		<grid model="com.axelor.apps.gst.db.Party" title="Party Grid" name="party-grid">
+				<field name="reference" />
+				<field name="name" />
+				<field name="type" />
+				<field name="isCustomer" />
+				<field name="isSupplier" />
+				<field name="gstin" />
+				<field name="contactList" />
+				<field name="addressList" />
+		</grid>
 
-    <form model="com.axelor.apps.gst.db.Party" title="Party Form" name="party-form" onSave="action-gst-validate-check-for-sequence-is-available">
-        <panel>
-            <field name="reference" colSpan="12" />
-            <field name="name" />
-            <field name="type" />
-            <field name="gstin" />
-        </panel>
-        <panel>
-            <field name="isCustomer" />
-            <field name="isSupplier" />
-        </panel>
-        <panel colSpan="12">
-            <field name="contactList" widget="editor" title="Contacts" colSpan="12">
-                <editor x-viewer="true">
-                    <field name="name" />
-                    <field name="type" />
-                    <field name="primaryEmail" />
-                    <field name="secondaryEmail" />
-                    <field name="primaryPhone" />
-                    <field name="secondaryPhone" />
-                </editor>
-            </field>
-        </panel>
-        <panel colSpan="12">
-            <field name="addressList" widget="editor" title="Address" colSpan="12">
-                <editor x-viewer="true">
-                    <field name="type" />
-                    <field name="line1" />
-                    <field name="line2" />
-                    <field name="city" />
-                    <field name="state" />
-                    <field name="country" />
-                    <field name="pincode" />
-                </editor>
-            </field>
-        </panel>
-    </form>
+		<form model="com.axelor.apps.gst.db.Party" title="Party Form" name="party-form" onSave="action-gst-validate-check-for-sequence-is-available">
+				<panel>
+						<field name="reference" colSpan="12" />
+						<field name="name" />
+						<field name="type" />
+						<field name="gstin" />
+				</panel>
+				<panel>
+						<field name="isCustomer" />
+						<field name="isSupplier" />
+				</panel>
+				<panel colSpan="12">
+						<field name="contactList" widget="editor" title="Contacts" colSpan="12">
+								<editor x-viewer="true">
+										<field name="name" />
+										<field name="type" />
+										<field name="primaryEmail" />
+										<field name="secondaryEmail" />
+										<field name="primaryPhone" />
+										<field name="secondaryPhone" />
+								</editor>
+						</field>
+				</panel>
+				<panel colSpan="12">
+						<field name="addressList" widget="editor" title="Address" colSpan="12">
+								<editor x-viewer="true">
+										<field name="type" />
+										<field name="line1" />
+										<field name="line2" />
+										<field name="city" />
+										<field name="state" />
+										<field name="country" />
+										<field name="pincode" />
+								</editor>
+						</field>
+				</panel>
+		</form>
 
-    <action-validate name="action-gst-validate-check-for-sequence-is-available">
-        <error message="Please Specify Sequence for Party"
-            if="eval: __repo__(Sequence).all().filter('self.model = :model').bind('model',__repo__(MetaModel).all().filter('self.name = \&apos;Party\&apos;').fetchOne()).fetchOne() == null" />
-    </action-validate>
+		<action-validate name="action-gst-validate-check-for-sequence-is-available">
+				<error message="Please Specify Sequence for Party"
+						if="eval: __repo__(Sequence).all().filter('self.model = :model').bind('model',__repo__(MetaModel).all().filter('self.name = \&apos;Party\&apos;').fetchOne()).fetchOne() == null" />
+		</action-validate>
+
+		<cards name="party-card" model="com.axelor.apps.gst.db.Party" title="Party cards">
+				<field name="reference" />
+				<field name="name" />
+				<field name="type" />
+				<field name="isCustomer" />
+				<field name="isSupplier" />
+				<field name="gstin" />
+				<field name="contactList" />
+				<field name="addressList" />
+				<template>
+					<![CDATA[
+				      <div class="span4 card-image">
+				      	<h3>{{name}}</h3>
+				        <strong>{{reference}}</strong>
+				      </div>
+				      <div class="span8">
+				      	<h4><strong>{{type}}</strong></h4>
+				      	<p><strong>GSTIN</strong>  {{gstin}}</p>
+				      </div>
+    				]]>
+    			</template>
+		</cards>
 
 </object-views>
