@@ -41,7 +41,7 @@
 				<attribute name="value" for="toDateTime" expr="eval: __datetime__" />
 		</action-attrs>
 
-		<chart name="invoice-paid-chart-per-customer" title="Invoice" onInit="action-gst-attrs-init-search-datetime-fields">
+		<chart name="invoice-paid-chart-per-category" title="Invoice" onInit="action-gst-attrs-init-search-datetime-fields">
 				<search-fields>
 						<field type="datetime" name="fromDateTime" title="From Date" />
 						<field type="datetime" name="toDateTime" title="To Date" />
@@ -49,31 +49,38 @@
 				<dataset type="jpql">
 					<![CDATA[
 			             SELECT
-			                  count(self.id) AS invoice_count,
-			                  MONTH(self.invoiceDateT) AS month,
-			                  _party.name AS _party
+			             		_product.name as product_name,
+			             		_category.name as category_name,
+			             		COUNT(self.invoice) AS invoice_count,
+			             		MONTH(_invoice.invoiceDateT) AS month
 			              FROM
-			                  Invoice self
+			                  InvoiceLine self
 			              LEFT JOIN
-			                  self.party AS _party
+			              		self.product AS _product
+			              LEFT JOIN
+			                  	_product.category AS _category
+			              LEFT JOIN
+			              		self.invoice AS _invoice
 			              WHERE
-			                  YEAR(self.invoiceDateT) = YEAR(current_date)
-			                  AND self.invoiceDateT > :fromDateTime
-			                  AND self.invoiceDateT < :toDateTime
-			                  AND self.statusSelect = 'paid'
+			                  YEAR(_invoice.invoiceDateT) = YEAR(current_date)
+			                  AND _invoice.invoiceDateT > :fromDateTime
+			                  AND _invoice.invoiceDateT < :toDateTime
+			                  AND _invoice.statusSelect = 'paid'
 			              GROUP BY
-			                  _party,
-			                  MONTH(self.invoiceDateT)
+			                  _product,
+			                  _category,
+			                  _invoice,
+			                  MONTH(_invoice.invoiceDateT)
 			              ORDER BY
-			                  _party
+			                  _invoice.id
 			      ]]>
 		      	</dataset>
-				<category key="_party" type="text" title="Customer" />
+				<category key="category_name" type="text" title="Category" />
 				<series key="invoice_count" type="bar" title="Invoices" />
 		</chart>
-		
+
 		<chart name="party-chart-per-state" title="Customer per State chart">
-			<dataset type="jpql">
+				<dataset type="jpql">
 				<![CDATA[
 					SELECT
 						state.name as _state,
@@ -87,8 +94,48 @@
 						party
 				]]>
 			</dataset>
-			<category key="_state" title="State"/>
-			<series key="party" type="pie" title="Customer"/>
+				<category key="_state" title="State" />
+				<series key="party" type="pie" title="Customer" />
+		</chart>
+
+		<chart name="invoice-per-status-amount-bar" title="Invoice Amount Chart" onInit="action-gst-attrs-set-value-of-amount-of-invoice">
+				<search-fields>
+						<field name="amount" type="string" />
+				</search-fields>
+				<dataset type="jpql">
+				<![CDATA[
+					SELECT
+						i.statusSelect AS status,
+						i.netAmount AS amount
+					FROM 
+						Invoice i
+					WHERE
+						i.netAmount < :amount
+					
+				]]>
+			</dataset>
+				<category key="status" title="Status" />
+				<series key="amount" title="Amount" type="bar" />
+		</chart>
+
+		<action-attrs name="action-gst-attrs-set-value-of-amount-of-invoice">
+				<attribute name="value" for="amount" expr="9999999999" />
+		</action-attrs>
+
+		<chart name="invoice-per-status-line-chart" title="Invoice Amount Chart">
+				<dataset type="jpql">
+				<![CDATA[
+					SELECT
+						i.statusSelect AS status,
+						COUNT(i.id) AS cnt
+					FROM 
+						Invoice i
+					GROUP BY
+						i.statusSelect		
+				]]>
+			</dataset>
+				<category key="status" title="Status" />
+				<series key="cnt" title="Invoices" type="line" />
 		</chart>
 
 
