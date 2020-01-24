@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
+
+		<chart name="invoice-unpaid-chart-per-customer" title="Invoice" onInit="action-gst-attrs-init-search-datetime-fields">
+				<search-fields>
+						<field type="datetime" name="fromDateTime" title="From Date" />
+						<field type="datetime" name="toDateTime" title="To Date" />
+				</search-fields>
+				<dataset type="jpql">
+					<![CDATA[
+			             SELECT
+			                  count(self.id) AS invoice_count,
+			                  MONTH(self.invoiceDateT) AS month,
+			                  _party.name AS _party
+			              FROM
+			                  Invoice self
+			              LEFT JOIN
+			                  self.party AS _party
+			              WHERE
+			                  YEAR(self.invoiceDateT) = YEAR(current_date)
+			                  AND self.invoiceDateT > :fromDateTime
+			                  AND self.invoiceDateT < :toDateTime
+			                  AND self.statusSelect <> 'paid'
+			              GROUP BY
+			                  _party,
+			                  MONTH(self.invoiceDateT)
+			              ORDER BY
+			                  _party
+			      ]]>
+		      	</dataset>
+				<category key="_party" type="text" title="Customer" />
+				<series key="invoice_count" type="bar" title="Invoices" />
+		</chart>
+
+		<action-attrs name="action-gst-attrs-init-search-datetime-fields">
+				<!-- <attribute name="value" for="fromDateTime" expr="eval: LocalDate.parse(LocalDate?.now()?.getYear() + &quot;-&quot; + LocalDate?.now()?.get);"/> -->
+				<!-- <attribute name="value" for="fromDateTime" expr="eval: LocalDateTime.of(2017, 2, 13, 15, 56).format(DateTimeFormatter.ofPattern(&quot;dd-MM-yyyy HH:mm:ss&quot;));"/> -->
+				<attribute name="value" for="fromDateTime" expr="eval: LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1, 00, 00);" />
+				<attribute name="value" for="toDateTime" expr="eval: __datetime__" />
+		</action-attrs>
+
+		<chart name="invoice-paid-chart-per-customer" title="Invoice" onInit="action-gst-attrs-init-search-datetime-fields">
+				<search-fields>
+						<field type="datetime" name="fromDateTime" title="From Date" />
+						<field type="datetime" name="toDateTime" title="To Date" />
+				</search-fields>
+				<dataset type="jpql">
+					<![CDATA[
+			             SELECT
+			                  count(self.id) AS invoice_count,
+			                  MONTH(self.invoiceDateT) AS month,
+			                  _party.name AS _party
+			              FROM
+			                  Invoice self
+			              LEFT JOIN
+			                  self.party AS _party
+			              WHERE
+			                  YEAR(self.invoiceDateT) = YEAR(current_date)
+			                  AND self.invoiceDateT > :fromDateTime
+			                  AND self.invoiceDateT < :toDateTime
+			                  AND self.statusSelect = 'paid'
+			              GROUP BY
+			                  _party,
+			                  MONTH(self.invoiceDateT)
+			              ORDER BY
+			                  _party
+			      ]]>
+		      	</dataset>
+				<category key="_party" type="text" title="Customer" />
+				<series key="invoice_count" type="bar" title="Invoices" />
+		</chart>
+		
+		<chart name="party-chart-per-state" title="Customer per State chart">
+			<dataset type="jpql">
+				<![CDATA[
+					SELECT
+						state.name as _state,
+						COUNT(a.party.name) as party
+					FROM 
+						Address a
+					LEFT JOIN
+						a.state as state
+					GROUP BY
+						state,
+						party
+				]]>
+			</dataset>
+			<category key="_state" title="State"/>
+			<series key="party" type="pie" title="Customer"/>
+		</chart>
+
+
+</object-views>

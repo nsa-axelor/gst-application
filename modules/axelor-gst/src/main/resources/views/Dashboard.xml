@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
+
+  <dashboard name="gst-dashboard" title="Welcome!">
+    <dashlet action="action.gst.view.chart.unpaid.invoices.per.customer" />
+    <dashlet action="action.gst.view.chart.paid.invoices.per.customer" />
+    <dashlet action="action.gst.view.chart.party.per.state"/>
+  </dashboard>
+
+  <action-view name="action.gst.view.chart.unpaid.invoices.per.customer" title="Invoice Chart" model="com.axelor.apps.gst.db.Invoice">
+    <view type="chart" name="invoice-unpaid-chart-per-customer" />
+  </action-view>
+
+  <action-view name="action.gst.view.chart.paid.invoices.per.customer" title="Invoice Chart" model="com.axelor.apps.gst.db.Invoice">
+    <view type="chart" name="invoice-paid-chart-per-customer" />
+  </action-view>
+  
+  <action-view name="action.gst.view.chart.party.per.state" title="Customer Chart" model="com.axelor.apps.gst.db.Party">
+  	<view type="chart" name="party-chart-per-state" />
+  </action-view>
+
+</object-views>
