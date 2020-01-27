@@ -81,14 +81,20 @@
 		<action-record name="action-gst-record-set-default-values" model="com.axelor.apps.gst.db.Invoice">
 				<field name="invoiceDateT" expr="eval: __datetime__" />
 				<field name="company" expr="eval: __repo__(Company).all().fetchOne()" />
-				<field name="invoiceItemList" expr="eval: invoiceItemList"/>
+				<field name="invoiceItemList" expr="eval: invoiceItemList" />
 		</action-record>
 
 		<action-group name="action-gst-group-select-validated-status">
+				<action name="action-gst-validate-check-sequence-for-invoice-is-available" />
 				<action name="action-gst-record-select-validated-status" />
 				<action name="action-gst-method-generate-reference-from-sequence" />
 				<action name="save" />
 		</action-group>
+
+		<action-validate name="action-gst-validate-check-sequence-for-invoice-is-available">
+				<error message="Please Specify Sequence for Party"
+						if="eval: __repo__(Sequence).all().filter('self.model = :model').bind('model',__repo__(MetaModel).all().filter('self.name = \&apos;Invoice\&apos;').fetchOne()).fetchOne() == null" />
+		</action-validate>
 
 		<action-group name="action-gst-group-select-draft-status">
 				<action name="action-gst-record-select-draft-status" />
