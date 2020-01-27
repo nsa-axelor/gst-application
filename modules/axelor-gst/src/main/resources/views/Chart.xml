@@ -19,8 +19,7 @@
 			              LEFT JOIN
 			                  self.party AS _party
 			              WHERE
-			                  YEAR(self.invoiceDateT) = YEAR(current_date)
-			                  AND self.invoiceDateT > :fromDateTime
+			                  self.invoiceDateT > :fromDateTime
 			                  AND self.invoiceDateT < :toDateTime
 			                  AND self.statusSelect <> 'paid'
 			              GROUP BY
@@ -51,26 +50,24 @@
 			             SELECT
 			             		_product.name as product_name,
 			             		_category.name as category_name,
-			             		COUNT(self.invoice) AS invoice_count,
-			             		MONTH(_invoice.invoiceDateT) AS month
+			             		COUNT(self.invoice) AS invoice_count
 			              FROM
 			                  InvoiceLine self
-			              INNER JOIN
-			              		self.product AS _product
-			              INNER JOIN
-			                  	_product.category AS _category
-			              INNER JOIN
+		                  LEFT JOIN
 			              		self.invoice AS _invoice
+			              LEFT JOIN
+			              		self.product AS _product
+			              LEFT JOIN
+			                  	_product.category AS _category
 			              WHERE
-			                  YEAR(_invoice.invoiceDateT) = YEAR(current_date)
-			                  AND _invoice.invoiceDateT > :fromDateTime
+			                  _invoice.invoiceDateT > :fromDateTime
 			                  AND _invoice.invoiceDateT < :toDateTime
 			                  AND _invoice.statusSelect = 'paid'
 			              GROUP BY
-			                  _product,
-			                  _category,
-			                  _invoice,
-			                  MONTH(_invoice.invoiceDateT)
+			              	  _product.name,
+			                  _category.name,
+			                  _invoice.id,
+			                  _invoice.statusSelect
 			              ORDER BY
 			                  _invoice.id
 			      ]]>
@@ -98,29 +95,38 @@
 				<series key="party" type="pie" title="Customer" />
 		</chart>
 
-		<chart name="invoice-per-status-amount-bar" title="Invoice Amount Chart" onInit="action-gst-attrs-set-value-of-amount-of-invoice">
-				<search-fields>
-						<field name="amount" type="string" />
-				</search-fields>
+		<chart name="invoice-per-status-amount-bar" title="Invoice Amount Chart">
 				<dataset type="jpql">
 				<![CDATA[
+											
 					SELECT
 						i.statusSelect AS status,
-						i.netAmount AS amount
+						(SELECT SUM(a.grossAmount) AS _amount FROM Invoice a WHERE a.statusSelect = i.statusSelect) AS _amount
 					FROM 
 						Invoice i
-					WHERE
-						i.netAmount < :amount
+					GROUP BY
+						i.statusSelect
 					
 				]]>
 			</dataset>
 				<category key="status" title="Status" />
-				<series key="amount" title="Amount" type="bar" />
+				<series key="_amount" title="Amount" type="bar" />
+				<!-- SELECT
+						i.statusSelect AS status,
+						(SELECT SUM(a.grossAmount) AS _amount FROM Invoice a WHERE a.statusSelect = i.statusSelect) AS _amount
+					FROM 
+						Invoice i
+					WHERE
+						(SELECT SUM(a.grossAmount) AS _amount FROM Invoice a WHERE a.statusSelect = i.statusSelect) < :amount
+					GROUP BY
+						i.statusSelect -->
 		</chart>
+		
+		
 
-		<action-attrs name="action-gst-attrs-set-value-of-amount-of-invoice">
+		<!-- <action-attrs name="action-gst-attrs-set-value-of-amount-of-invoice">
 				<attribute name="value" for="amount" expr="9999999999" />
-		</action-attrs>
+		</action-attrs> -->
 
 		<chart name="invoice-per-status-line-chart" title="Invoice Amount Chart">
 				<dataset type="jpql">
