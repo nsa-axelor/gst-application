@@ -29,32 +29,40 @@ public class InvoiceController {
 
 	@Transactional
 	public void generateNewSequence(ActionRequest request, ActionResponse response) {
-		MetaModelRepository metaModelRepository = Beans.get(MetaModelRepository.class);
-		MetaModel model = metaModelRepository.findByName("Invoice");
-		Sequence sequence = sequenceService.findSequenceByModel(model);
-		response.setValue("reference", sequenceService.generateSequence(sequence));
+		try {
+			MetaModelRepository metaModelRepository = Beans.get(MetaModelRepository.class);
+			MetaModel model = metaModelRepository.findByName("Invoice");
+			Sequence sequence = sequenceService.findSequenceByModel(model);
+			response.setValue("reference", sequenceService.generateSequence(sequence));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setPartyPrimaryContactAndCalculations(ActionRequest request, ActionResponse response) {
-		Invoice invoice = request.getContext().asType(Invoice.class);
 		try {
-			Party party = invoice.getParty();
-			Contact contact = Query.of(Contact.class).filter("self.type = 'primary' AND self.party = :party")
-					.bind("party", party).fetchOne();
-			Address address = Query.of(Address.class).filter("self.type = 'invoice' AND self.party = :party")
-					.bind("party", party).fetchOne();
-			Company company = invoice.getCompany();
-			Address shippingAddress = invoiceService.getAddressForShipping(invoice, party, company);
-			invoice.setPartyContact(contact);
-			invoice.setInvoiceAddress(address);
-			invoice.setShippingAddress(shippingAddress);
-			List<InvoiceLine> lineList = invoice.getInvoiceItemList();
-			invoice.setInvoiceItemList(invoiceService.regenerateInvoiceLine(invoice));
-			invoice = invoiceService.getCalculatedInvoice(invoice, lineList);
-		} catch (NullPointerException e) {
+			Invoice invoice = request.getContext().asType(Invoice.class);
+			try {
+				Party party = invoice.getParty();
+				Contact contact = Query.of(Contact.class).filter("self.type = 'primary' AND self.party = :party")
+						.bind("party", party).fetchOne();
+				Address address = Query.of(Address.class).filter("self.type = 'invoice' AND self.party = :party")
+						.bind("party", party).fetchOne();
+				Company company = invoice.getCompany();
+				Address shippingAddress = invoiceService.getAddressForShipping(invoice, party, company);
+				invoice.setPartyContact(contact);
+				invoice.setInvoiceAddress(address);
+				invoice.setShippingAddress(shippingAddress);
+				List<InvoiceLine> lineList = invoice.getInvoiceItemList();
+				invoice.setInvoiceItemList(invoiceService.regenerateInvoiceLine(invoice));
+				invoice = invoiceService.getCalculatedInvoice(invoice, lineList);
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+			response.setValues(invoice);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		response.setValues(invoice);
 	}
 
 	// public void changeShippingAddress(ActionRequest request, ActionResponse

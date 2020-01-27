@@ -16,17 +16,28 @@ public class ProductController {
 	ProductService productService;
 
 	public void onClickSelectProductsIntoInvoiceLine(ActionRequest request, ActionResponse response) {
-		@SuppressWarnings("unchecked")
-		List<Integer> _ids = (ArrayList<Integer>) request.getContext().get("_ids");
-		List<Long> ids = new ArrayList<>();
-		for (Integer id : _ids) {
-			ids.add(new Long(Long.valueOf(id)));
-		}
-		List<InvoiceLine> lines = productService.getInvoiceLinesByIds(ids);
+		try {
+			@SuppressWarnings("unchecked")
+			List<Integer> _ids = (ArrayList<Integer>) request.getContext().get("_ids");
+			try {
+			if(_ids.size() < 1) {
+				response.setError("Please select product at least one");
+			}
+			}catch(NullPointerException e) {
+				response.setError("Please select product at least one");
+			}
+			List<Long> ids = new ArrayList<>();
+			for (Integer id : _ids) {
+				ids.add(new Long(Long.valueOf(id)));
+			}
+			List<InvoiceLine> lines = productService.getInvoiceLinesByIds(ids);
 //		response.setValue("invoiceItemList", lines);
-		System.out.println(lines);
-		response.setView(ActionView.define("Invoice Form").model("com.axelor.apps.gst.db.Invoice")
-				.add("form", "invoice-form").param("forceEdit", "true").context("invoiceItemList", lines).map());
-		
+			System.out.println(lines);
+			response.setView(ActionView.define("Invoice Form").model("com.axelor.apps.gst.db.Invoice")
+					.add("form", "invoice-form").param("forceEdit", "true").context("invoiceItemList", lines).map());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }
