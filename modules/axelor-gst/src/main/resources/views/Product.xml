@@ -41,7 +41,7 @@
 		</form>
 		
 		<action-method name="action-gst-method-open-invoice-form-with-product">
-			<call class="com.axelor.apps.gst.web.InvoiceController" method="onClickSelectProductsIntoInvoiceLine"/>
+			<call class="com.axelor.apps.gst.web.ProductController" method="onClickSelectProductsIntoInvoiceLine"/>
 		</action-method>
 
 		<action-view name="action-gst-view-open-invoice-form-with-product" title="Invoice Form" model="com.axelor.apps.gst.db.Invoice">

@@ -18,6 +18,7 @@ public class InvoiceLineController {
     String itemName = "[" + product.getCode() + "]" + product.getName();
     line.setItem(itemName);
     line.setGstRate(product.getGstRate());
+    line.setHsbn(product.getHsbn());
     response.setValues(line);
   }
 

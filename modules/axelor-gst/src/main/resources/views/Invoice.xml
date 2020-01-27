@@ -81,6 +81,7 @@
 		<action-record name="action-gst-record-set-default-values" model="com.axelor.apps.gst.db.Invoice">
 				<field name="invoiceDateT" expr="eval: __datetime__" />
 				<field name="company" expr="eval: __repo__(Company).all().fetchOne()" />
+				<field name="invoiceItemList" expr="eval: invoiceItemList"/>
 		</action-record>
 
 		<action-group name="action-gst-group-select-validated-status">
