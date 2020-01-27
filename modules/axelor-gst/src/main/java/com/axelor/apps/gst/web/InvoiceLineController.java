@@ -17,7 +17,7 @@ public class InvoiceLineController {
 		try {
 			InvoiceLine line = request.getContext().asType(InvoiceLine.class);
 			Product product = line.getProduct();
-			String itemName = "[" + product.getCode() + "]" + product.getName();
+			String itemName = service.generateItemName(product);
 			line.setItem(itemName);
 			line.setGstRate(product.getGstRate());
 			line.setHsbn(product.getHsbn());

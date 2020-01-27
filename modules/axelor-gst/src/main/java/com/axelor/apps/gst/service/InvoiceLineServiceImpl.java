@@ -3,6 +3,8 @@ package com.axelor.apps.gst.service;
 import com.axelor.apps.gst.db.Address;
 import com.axelor.apps.gst.db.Invoice;
 import com.axelor.apps.gst.db.InvoiceLine;
+import com.axelor.apps.gst.db.Product;
+
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -44,4 +46,9 @@ public class InvoiceLineServiceImpl implements InvoiceLineService {
 
     return line;
   }
+
+@Override
+public String generateItemName(Product product) {
+	return "[" + product.getCode() + "]" + product.getName();
+}
 }
