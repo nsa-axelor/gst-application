@@ -46,7 +46,7 @@ public class InvoiceController {
 				Party party = invoice.getParty();
 				Contact contact = Query.of(Contact.class).filter("self.type = 'primary' AND self.party = :party")
 						.bind("party", party).fetchOne();
-				Address address = Query.of(Address.class).filter("self.type = 'invoice' AND self.party = :party")
+				Address address = Query.of(Address.class).filter("(self.type = 'invoice' OR self.type = 'default') AND self.party = :party")
 						.bind("party", party).fetchOne();
 				Company company = invoice.getCompany();
 				Address shippingAddress = invoiceService.getAddressForShipping(invoice, party, company);

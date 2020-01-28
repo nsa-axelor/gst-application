@@ -13,7 +13,7 @@
         <field name="pincode" />
     </grid>
 
-    <form model="com.axelor.apps.gst.db.Address" title="Address Form" name="address-form">
+    <form model="com.axelor.apps.gst.db.Address" title="Address Form" name="address-form" onNew="action-gst-record-set-default-address-values">
         <panel colSpan="12">
             <field name="type" />
             <field name="line1" />
@@ -21,12 +21,21 @@
         </panel>
 
         <panel colSpan="12">
-            <field name="city" />
-            <field name="state" />
-            <field name="country" />
+            <field name="city" onChange="action-gst-record-set-country-and-state-by-city"/>
             <field name="pincode" />
+            <field name="state" readonly="true"/>
+            <field name="country" readonly="true"/>
         </panel>
 
     </form>
+    
+    <action-record name="action-gst-record-set-default-address-values" model="com.axelor.apps.gst.db.Address">
+    	<field name="type" expr="default"/>
+    </action-record>
+    
+    <action-record name="action-gst-record-set-country-and-state-by-city" model="com.axelor.apps.gst.db.Address">
+    	<field name="state" expr="eval: __this__.city.state"/>
+    	<field name="country" expr="eval: __this__.city.state.country"/>
+    </action-record>
 
 </object-views>

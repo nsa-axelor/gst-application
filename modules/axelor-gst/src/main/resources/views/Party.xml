@@ -39,13 +39,13 @@
 				</panel>
 				<panel colSpan="12">
 						<field name="addressList" widget="editor" title="Address" colSpan="12">
-								<editor x-viewer="true">
+								<editor x-viewer="true" >
 										<field name="type" />
 										<field name="line1" />
 										<field name="line2" />
-										<field name="city" />
-										<field name="state" />
-										<field name="country" />
+										<field name="city" onChange="action-gst-record-set-country-and-state-by-city"/>
+										<field name="state" readonly="true"/>
+										<field name="country" readonly="true"/>
 										<field name="pincode" />
 								</editor>
 						</field>
