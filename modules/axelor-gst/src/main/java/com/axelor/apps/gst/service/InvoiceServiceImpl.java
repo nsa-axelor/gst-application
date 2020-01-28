@@ -48,14 +48,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public Address getAddressForShipping(Invoice invoice, Party party, Company company) {
 		if (!invoice.getIsUseInvoiceAddressAsShipping()) {
-			return company.getAddress(); 
+			return Query.of(Address.class)
+					.filter("(self.type = 'shipping' OR self.type = 'default') AND self.party = :party")
+					.bind("party", party).fetchOne();
 		}
 		// return Query.of(Address.class).filter("self.type = 'invoice' AND self.company
 		// = :company")
 		// .bind("company", company).fetchOne();
-		return Query.of(Address.class).filter("(self.type = 'shipping' OR self.type = 'default') AND self.party = :party").bind("party", party)
+		return Query.of(Address.class)
+				.filter("(self.type = 'invoice' OR self.type = 'default') AND self.party = :party").bind("party", party)
 				.fetchOne();
-				
+
 	}
 
 	@Override
