@@ -3,12 +3,12 @@
 		xsi:schemaLocation="http://axelor.com/xml/ns/object-views
   http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
-		<menuitem title="Dashboard" name="gst-root-dashboard" tag-style="important" icon-background="blue" action="action.gst.view.dashboard"/>
+		<menuitem title="Dashboard" name="gst-root-dashboard" tag-style="important" icon-background="#871800" action="action.gst.view.dashboard" icon="fa-dashboard"/>
 		<action-view name="action.gst.view.dashboard" title="Dashboard" model="com.axelor.apps.gst.db.Invoice" home="true">
 				<view type="dashboard" name="gst-dashboard" />
 		</action-view>
 
-		<menuitem title="Party" name="gst-root-party" />
+		<menuitem title="Party" name="gst-root-party" icon="fa-user" icon-background="#8F9D00"/>
 
 		<menuitem title="Party" name="gst-root-party-party" parent="gst-root-party" action="action.gst.view.party" />
 		<action-view name="action.gst.view.party" title="Party" model="com.axelor.apps.gst.db.Party">
@@ -49,7 +49,7 @@
 				<view type="form" name="country-form" />
 		</action-view>
 
-		<menuitem title="Product" name="gst-root-product" />
+		<menuitem title="Product" name="gst-root-product" icon-background="#00ABAB" icon="fa-cubes"/>
 
 		<menuitem title="Product" name="gst-root-product-product" parent="gst-root-product" action="action.gst.view.product" />
 		<action-view name="action.gst.view.product" title="Product" model="com.axelor.apps.gst.db.Product">
@@ -65,7 +65,7 @@
 		</action-view>
 
 
-		<menuitem title="Invoice" name="gst-root-invoice" />
+		<menuitem title="Invoice" name="gst-root-invoice" icon-background="#71147A" icon="fa-file" />
 
 		<menuitem title="Create Invoice" name="gst-root-invoice-createinvoice" parent="gst-root-invoice" action="action.gst.invoice.view.create.invoice.form" />
 		<action-view name="action.gst.invoice.view.create.invoice.form" title="Create Invoice" model="com.axelor.apps.gst.db.Invoice">
@@ -108,7 +108,7 @@
 				<view type="form" name="invoice-form" />
 		</action-view>
 
-		<menuitem title="Company" name="gst-root-company" />
+		<menuitem title="Company" name="gst-root-company" icon="fa-building"/>
 
 		<menuitem title="Company" name="gst-root-company-company" parent="gst-root-company" action="action.gst.view.company" />
 		<action-view name="action.gst.view.company" title="Company" model="com.axelor.apps.gst.db.Company">
