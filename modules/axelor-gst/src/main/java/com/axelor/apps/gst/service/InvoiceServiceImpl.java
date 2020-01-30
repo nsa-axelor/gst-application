@@ -58,9 +58,6 @@ public class InvoiceServiceImpl implements InvoiceService {
   public List<InvoiceLine> regenerateInvoiceLine(Invoice invoice) {
     List<InvoiceLine> lines = invoice.getInvoiceItemList();
     List<InvoiceLine> invoiceItemList = new ArrayList<>();
-    //    for (InvoiceLine line : lines) {
-    //      invoiceItemList.add(invoiceLineService.calculateInvoiceLine(line, invoice));
-    //    }
     lines.forEach(
         line -> invoiceItemList.add(invoiceLineService.calculateInvoiceLine(line, invoice)));
     return invoiceItemList;
