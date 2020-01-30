@@ -28,14 +28,14 @@
         </panel>
 
     </form>
-    
+
     <action-record name="action-gst-record-set-default-address-values" model="com.axelor.apps.gst.db.Address">
-    	<field name="type" expr="default"/>
+      <field name="type" expr="default"/>
     </action-record>
-    
+
     <action-record name="action-gst-record-set-country-and-state-by-city" model="com.axelor.apps.gst.db.Address">
-    	<field name="state" expr="eval: __this__.city.state"/>
-    	<field name="country" expr="eval: __this__.city.state.country"/>
+      <field name="state" expr="eval: __this__.city.state"/>
+      <field name="country" expr="eval: __this__.city.state.country"/>
     </action-record>
 
 </object-views>

@@ -1,9 +1,8 @@
 package com.axelor.apps.gst.service;
 
+import com.axelor.apps.gst.db.InvoiceLine;
 import java.util.List;
 
-import com.axelor.apps.gst.db.InvoiceLine;
-
 public interface ProductService {
-	public List<InvoiceLine> getInvoiceLinesByIds(List<Long> ids);
+  public List<InvoiceLine> getInvoiceLinesByIds(List<Long> ids);
 }

@@ -19,23 +19,23 @@
   <action-view name="action.gst.view.chart.paid.invoices.per.category.per.product" title="Invoice Chart" model="com.axelor.apps.gst.db.Invoice">
     <view type="chart" name="invoice-paid-chart-per-category" />
   </action-view>
-  
+
   <action-view name="action.gst.view.chart.party.per.state" title="Customer Chart" model="com.axelor.apps.gst.db.Party">
-  	<view type="chart" name="party-chart-per-state" />
+    <view type="chart" name="party-chart-per-state" />
   </action-view>
-  
+
   <action-view name="action.gst.view.chart.invoice.per.status.amount.bar.chart" title="Invoice Amount Chart" model="com.axelor.apps.gst.db.Invoice">
-  	<view type="chart" name="invoice-per-status-amount-bar"/>
+    <view type="chart" name="invoice-per-status-amount-bar"/>
   </action-view>
-  
+
   <action-view name="action.gst.view.chart.invoices.per.staus.line.chart" title="Invoices per Status" model="com.axelor.apps.gst.db.Invoice">
-  	<view type="chart" name="invoice-per-status-line-chart"/>
+    <view type="chart" name="invoice-per-status-line-chart"/>
   </action-view>
-  
+
   <action-view name="action.gst.view.older.invoices.validated.and.not.paid" title="Older Invoices" model="com.axelor.apps.gst.db.Invoice">
-  	<view type="grid" name="invoice-grid"/>
-  	<domain>self.invoiceDateT &lt; :beforeOneMonthDateTime</domain>
-  	<context name="beforeOneMonthDateTime" expr="eval: LocalDateTime.of((__date__.getMonthValue() == 1) ? __date__.getYear() - 1 : __date__.getYear(), (__date__.getMonthValue() == 1) ? 12 : (LocalDate.now().getMonthValue() - 1), __date__.getDayOfMonth(), __datetime__.getHour(), __datetime__.getMinute());"/>
+    <view type="grid" name="invoice-grid"/>
+    <domain>self.invoiceDateT &lt; :beforeOneMonthDateTime</domain>
+    <context name="beforeOneMonthDateTime" expr="eval: LocalDateTime.of((__date__.getMonthValue() == 1) ? __date__.getYear() - 1 : __date__.getYear(), (__date__.getMonthValue() == 1) ? 12 : (LocalDate.now().getMonthValue() - 1), __date__.getDayOfMonth(), __datetime__.getHour(), __datetime__.getMinute());"/>
   </action-view>
 
 </object-views>

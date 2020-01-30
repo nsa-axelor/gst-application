@@ -13,61 +13,56 @@ import java.util.List;
 
 public class InvoiceServiceImpl implements InvoiceService {
 
-	private BigDecimal totalNetAmount;
-	private BigDecimal netIgst;
-	private BigDecimal netCgst;
-	private BigDecimal netSgst;
-	private BigDecimal netGrossAmount;
-	private List<InvoiceLine> invoiceItemList;
-	@Inject
-	InvoiceLineService invoiceLineService;
+  @Inject InvoiceLineService invoiceLineService;
 
-	@Override
-	public Invoice getCalculatedInvoice(Invoice invoice, List<InvoiceLine> lineList) {
-		totalNetAmount = new BigDecimal(0);
-		netIgst = new BigDecimal(0);
-		netCgst = new BigDecimal(0);
-		netSgst = new BigDecimal(0);
-		netGrossAmount = new BigDecimal(0);
-		lineList.forEach(line -> {
-			BigDecimal netAmount = line.getNetAmount();
-			totalNetAmount = totalNetAmount.add(netAmount);
-			netIgst = netIgst.add(line.getIgst());
-			netSgst = netSgst.add(line.getSgst());
-			netCgst = netCgst.add(line.getCsgt());
-			netGrossAmount = netGrossAmount.add(line.getGrossAmount());
-		});
-		invoice.setNetAmount(totalNetAmount);
-		invoice.setNetCsgt(netCgst);
-		invoice.setNetIgst(netIgst);
-		invoice.setNetSgst(netSgst);
-		invoice.setGrossAmount(netGrossAmount);
-		return invoice;
-	}
+  @Override
+  public Invoice getCalculatedInvoice(Invoice invoice, List<InvoiceLine> lineList) {
+    BigDecimal totalNetAmount = new BigDecimal(0);
+    BigDecimal netIgst = new BigDecimal(0);
+    BigDecimal netCgst = new BigDecimal(0);
+    BigDecimal netSgst = new BigDecimal(0);
+    BigDecimal netGrossAmount = new BigDecimal(0);
+    for (InvoiceLine line : lineList) {
+      BigDecimal netAmount = line.getNetAmount();
+      totalNetAmount = totalNetAmount.add(netAmount);
+      netIgst = netIgst.add(line.getIgst());
+      netSgst = netSgst.add(line.getSgst());
+      netCgst = netCgst.add(line.getCsgt());
+      netGrossAmount = netGrossAmount.add(line.getGrossAmount());
+    }
 
-	@Override
-	public Address getAddressForShipping(Invoice invoice, Party party, Company company) {
-		if (!invoice.getIsUseInvoiceAddressAsShipping()) {
-			return Query.of(Address.class)
-					.filter("(self.type = 'shipping' OR self.type = 'default') AND self.party = :party")
-					.bind("party", party).fetchOne();
-		}
-		// return Query.of(Address.class).filter("self.type = 'invoice' AND self.company
-		// = :company")
-		// .bind("company", company).fetchOne();
-		return Query.of(Address.class)
-				.filter("(self.type = 'invoice' OR self.type = 'default') AND self.party = :party").bind("party", party)
-				.fetchOne();
+    invoice.setNetAmount(totalNetAmount);
+    invoice.setNetCsgt(netCgst);
+    invoice.setNetIgst(netIgst);
+    invoice.setNetSgst(netSgst);
+    invoice.setGrossAmount(netGrossAmount);
+    return invoice;
+  }
 
-	}
+  @Override
+  public Address getAddressForShipping(Invoice invoice, Party party, Company company) {
+    if (!invoice.getIsUseInvoiceAddressAsShipping()) {
+      return Query.of(Address.class)
+          .filter("(self.type = 'shipping' OR self.type = 'default') AND self.party = :party")
+          .bind("party", party)
+          .fetchOne();
+    }
 
-	@Override
-	public List<InvoiceLine> regenerateInvoiceLine(Invoice invoice) {
-		List<InvoiceLine> lines = invoice.getInvoiceItemList();
-		invoiceItemList = new ArrayList<>();
-		lines.forEach(line -> {
-			invoiceItemList.add(invoiceLineService.calculateInvoiceLine(line, invoice));
-		});
-		return invoiceItemList;
-	}
+    return Query.of(Address.class)
+        .filter("(self.type = 'invoice' OR self.type = 'default') AND self.party = :party")
+        .bind("party", party)
+        .fetchOne();
+  }
+
+  @Override
+  public List<InvoiceLine> regenerateInvoiceLine(Invoice invoice) {
+    List<InvoiceLine> lines = invoice.getInvoiceItemList();
+    List<InvoiceLine> invoiceItemList = new ArrayList<>();
+    //    for (InvoiceLine line : lines) {
+    //      invoiceItemList.add(invoiceLineService.calculateInvoiceLine(line, invoice));
+    //    }
+    lines.forEach(
+        line -> invoiceItemList.add(invoiceLineService.calculateInvoiceLine(line, invoice)));
+    return invoiceItemList;
+  }
 }

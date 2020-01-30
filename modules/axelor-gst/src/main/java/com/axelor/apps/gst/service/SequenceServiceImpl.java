@@ -10,7 +10,10 @@ public class SequenceServiceImpl implements SequenceService {
 
   @Override
   public String generateSequence(Sequence sequence) {
-    String seq = sequence.getPrefix() + generatePadding(sequence) + ((sequence.getSuffix()!=null) ? sequence.getSuffix() : "");
+    String seq =
+        sequence.getPrefix()
+            + generatePadding(sequence)
+            + ((sequence.getSuffix() != null) ? sequence.getSuffix() : "");
     return seq;
   }
 

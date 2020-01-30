@@ -16,9 +16,9 @@
             <field name="country" readonly="true"/>
         </panel>
     </form>
-    
+
     <action-record name="action-gst-record-set-country-by-state" model="com.axelor.apps.gst.db.City">
-    	<field name="country" expr="eval: __this__.state.country"/>
+      <field name="country" expr="eval: __this__.state.country"/>
     </action-record>
 
 </object-views>
