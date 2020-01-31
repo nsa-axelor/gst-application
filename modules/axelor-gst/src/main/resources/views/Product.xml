@@ -6,6 +6,7 @@
     <grid model="com.axelor.apps.gst.db.Product" title="Product Grid" name="product-grid">
         <toolbar>
             <button name="createInvoiceBtn" title="Create Invoice" onClick="action-gst-method-open-invoice-form-with-product" />
+            <button name="importProductBtn" title="Import Some Products" onClick="action-gst-method-import-products"/>
         </toolbar>
         <field name="name" />
         <field name="code" />
@@ -16,6 +17,10 @@
         <field name="image" />
         <field name="gstRate" />
     </grid>
+    
+    <action-method name="action-gst-method-import-products">
+    	<call class="com.axelor.apps.gst.web.ProductController" method="importSomeProducts"/>
+    </action-method>
 
     <form model="com.axelor.apps.gst.db.Product" title="Product Form" name="product-form">
         <toolbar>

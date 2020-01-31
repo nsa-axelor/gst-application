@@ -1,6 +1,7 @@
 package com.axelor.apps.gst.web;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +40,11 @@ public class ProductController {
 		}
 	}
 
-	public void importSomeProducts(ActionRequest request, ActionResponse response) {
+	public void importSomeProducts(ActionRequest request, ActionResponse response) throws IOException{
 		try {
-			File configFile = new Constants().getConfigFile();
-			Importer importer = new CSVImporter(configFile.getAbsolutePath(), new Constants().getDataCsvFile());
+			Constants constant = new Constants();
+			File configFile = constant.getConfigFile();
+			Importer importer = new CSVImporter(configFile.getAbsolutePath(), constant.getDataCsvFile());
 			importer.run();
 			response.setReload(true);
 		} catch (Exception e) {

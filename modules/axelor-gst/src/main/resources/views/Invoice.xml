@@ -48,9 +48,21 @@
 						<field name="invoiceAddress" onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
 						<field name="isUseInvoiceAddressAsShipping" colSpan="6" onChange="action-gst-method-set-values-from-party" />
 						<field name="shippingAddress" onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
-						<field name="invoiceItemList" colSpan="12" form-view="invoice-line-from" grid-view="invoice-line-grid"
-								onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
 				</panel>
+
+				<panel-tabs>
+						<panel title="Invoice Items">
+								<field name="invoiceItemList" colSpan="12" form-view="invoice-line-from" grid-view="invoice-line-grid"
+										onChange="action-gst-method-set-total-tax-and-amount-from-invoiceline" />
+						</panel>
+						
+<!-- 						<panel title="Address List" showIf="party!= null &amp;&amp; party.addressList !=null &amp;&amp; !party.addressList.size() > 0 "> -->
+<!-- 								<field name="party.addressList" /> -->
+<!-- 						</panel> -->
+						<panel title="Address List" showIf="party.addressList.length != 0">
+								<field name="party.addressList" />
+						</panel>
+				</panel-tabs>
 
 				<panel>
 						<field name="netAmount" />
@@ -78,7 +90,7 @@
 				<!-- <attribute name="domain" for="invoiceAddress" expr="eval: __repo__(Address).all().filter(&quot;self.party = :party AND (self.type = 'invoice' OR self.type = 'default')&quot;).bind('party',__this__.party).fetch().fullAddress.toString()"/> -->
 				<attribute name="domain" for="invoiceAddress" expr="eval: &quot; self.party = :party AND (self.type = 'default' OR self.type = 'invoice') &quot;" />
 				<attribute name="domain" for="shippingAddress" expr="eval: &quot; self.party = :party AND (self.type = 'default' OR self.type = 'shipping') &quot;" />
-				<attribute name="domain" for="partyContact" expr="eval: &quot; self.party= :party &quot;"/>
+				<attribute name="domain" for="partyContact" expr="eval: &quot; self.party= :party &quot;" />
 		</action-attrs>
 
 		<!-- <action-group name="action-gst-group-change-shipping-address-from-party"> -->
